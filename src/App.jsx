@@ -5,12 +5,37 @@ import SideBar from "./components/SideBar";
 
 function App() {
   const [todoList, setTodoList] = useState([
-    { id: 1, name: "di choi", isImportant: false, isDone: false },
-    { id: 2, name: "di ngu", isImportant: false, isDone: false },
-    { id: 3, name: "di hoc", isImportant: true, isDone: false },
-    { id: 4, name: "di lam", isImportant: false, isDone: true },
+    {
+      id: 1,
+      name: "di choi",
+      isImportant: false,
+      isDone: false,
+    },
+    {
+      id: 2,
+      name: "di ngu",
+      isImportant: false,
+      isDone: false,
+    },
+    {
+      id: 3,
+      name: "di hoc",
+      isImportant: true,
+      isDone: false,
+    },
+    {
+      id: 4,
+      name: "di lam",
+      isImportant: false,
+      isDone: true,
+    },
   ]);
+  const [isShowSideBar, setIsShowSideBar] = useState(false);
   const taskInputRef = useRef();
+  const [selectedTodoItemId, setSelectedTodoItemId] = useState(null);
+  const selectedTodoItem = todoList.find(
+    (todo) => todo.id === selectedTodoItemId
+  );
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -36,6 +61,25 @@ function App() {
     setTodoList(updatedTodoList);
   };
 
+  const handleTodoItemClick = (todoItemId) => {
+    setSelectedTodoItemId(todoItemId);
+    setIsShowSideBar(true);
+  };
+
+  const handleCloseSideBar = () => {
+    setIsShowSideBar(false);
+  };
+
+  const handleSaveTodoItem = (todoItem) => {
+    const updatedTodoList = todoList.map((todo) => {
+      if (todo.id === todoItem.id) {
+        return todoItem;
+      }
+      return todo;
+    });
+    setTodoList(updatedTodoList);
+  };
+
   const todos = todoList.map((todo) => {
     return (
       <TodoItem
@@ -45,6 +89,7 @@ function App() {
         isImportant={todo.isImportant}
         isDone={todo.isDone}
         handleTodoItemCheckboxChange={handleTodoItemCheckboxChange}
+        handleTodoItemClick={handleTodoItemClick}
       />
     );
   });
@@ -60,7 +105,14 @@ function App() {
         ref={taskInputRef}
       />
       <div>{todos}</div>
-      <SideBar />
+      {isShowSideBar && (
+        <SideBar
+          key={selectedTodoItemId}
+          handleCloseSideBar={handleCloseSideBar}
+          todoItem={selectedTodoItem}
+          handleSaveTodoItem={handleSaveTodoItem}
+        />
+      )}
     </div>
   );
 }
