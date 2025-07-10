@@ -30,7 +30,7 @@ const SideBar = (props) => {
               type="checkbox"
               id="sb-is-important"
               checked={newTodoItem.isImportant}
-              onChange={(e) =>
+              onChange={() =>
                 setNewTodoItem({
                   ...newTodoItem,
                   isImportant: !newTodoItem.isImportant,
@@ -44,7 +44,7 @@ const SideBar = (props) => {
               type="checkbox"
               id="sb-is-done"
               checked={newTodoItem.isDone}
-              onChange={(e) =>
+              onChange={() =>
                 setNewTodoItem({ ...newTodoItem, isDone: !newTodoItem.isDone })
               }
             />

@@ -5,6 +5,15 @@
 }
 
 .container {
+  display: flex;
+}
+
+.filter-panel {
+  flex: 1 1; /* flex-grow: 1; flex-shrink: 1; */
+}
+
+.main-content {
+  flex: 2 1; /* flex-grow: 2; flex-shrink: 1; */
   width: 100%;
   background-color: #f0f0f0;
   padding: 20px;
