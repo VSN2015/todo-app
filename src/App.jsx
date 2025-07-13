@@ -1,45 +1,20 @@
-import { useMemo, useRef, useState } from "react";
+import { useContext, useMemo, useRef } from "react";
 import "./App.css";
 import TodoItem from "./components/TodoItem";
 import SideBar from "./components/SideBar";
 import FilterPanel from "./components/FilterPanel";
+import { AppContext } from "./context/AppContext";
 
 function App() {
-  const [todoList, setTodoList] = useState([
-    {
-      id: 1,
-      name: "di choi",
-      isImportant: false,
-      isDone: false,
-    },
-    {
-      id: 2,
-      name: "di ngu",
-      isImportant: false,
-      isDone: false,
-    },
-    {
-      id: 3,
-      name: "di hoc",
-      isImportant: true,
-      isDone: false,
-    },
-    {
-      id: 4,
-      name: "di lam",
-      isImportant: false,
-      isDone: true,
-    },
-  ]);
-  const [isShowSideBar, setIsShowSideBar] = useState(false);
   const taskInputRef = useRef();
-  const [selectedTodoItemId, setSelectedTodoItemId] = useState(null);
-  const [selectedFilterId, setSelectedFilterId] = useState("all");
-  const [searchText, setSearchText] = useState("");
-
-  const selectedTodoItem = todoList.find(
-    (todo) => todo.id === selectedTodoItemId
-  );
+  const {
+    selectedTodoItemId,
+    selectedCategoryId,
+    selectedFilterId,
+    searchText,
+    todoList,
+    setTodoList,
+  } = useContext(AppContext);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -48,6 +23,8 @@ function App() {
         name: event.target.value,
         isImportant: false,
         isDone: false,
+        isDeleted: false,
+        category: "other",
       };
       setTodoList([newTodo, ...todoList]);
       // event.target.value = "";
@@ -55,40 +32,13 @@ function App() {
     }
   };
 
-  const handleTodoItemCheckboxChange = (todoItemId) => {
-    const updatedTodoList = todoList.map((todo) => {
-      if (todo.id === todoItemId) {
-        return { ...todo, isDone: !todo.isDone };
-      }
-      return todo;
-    });
-    setTodoList(updatedTodoList);
-  };
-
-  const handleTodoItemClick = (todoItemId) => {
-    setSelectedTodoItemId(todoItemId);
-    setIsShowSideBar(true);
-  };
-
-  const handleCloseSideBar = () => {
-    setIsShowSideBar(false);
-  };
-
-  const handleSaveTodoItem = (todoItem) => {
-    const updatedTodoList = todoList.map((todo) => {
-      if (todo.id === todoItem.id) {
-        return todoItem;
-      }
-      return todo;
-    });
-    setTodoList(updatedTodoList);
-  };
-
   const filteredTodos = useMemo(() => {
     return todoList.filter((todo) => {
-      if (!todo.name.toLowerCase().includes(searchText.toLowerCase())) {
+      if (!todo.name.toLowerCase().includes(searchText.toLowerCase()))
         return false;
-      }
+
+      if (selectedCategoryId && todo.category !== selectedCategoryId)
+        return false;
 
       switch (selectedFilterId) {
         case "all":
@@ -103,7 +53,7 @@ function App() {
           return false;
       }
     });
-  }, [selectedFilterId, todoList, searchText]);
+  }, [selectedFilterId, todoList, searchText, selectedCategoryId]);
 
   const todos = filteredTodos.map((todo) => {
     return (
@@ -113,21 +63,13 @@ function App() {
         name={todo.name}
         isImportant={todo.isImportant}
         isDone={todo.isDone}
-        handleTodoItemCheckboxChange={handleTodoItemCheckboxChange}
-        handleTodoItemClick={handleTodoItemClick}
       />
     );
   });
 
   return (
     <div className="container">
-      <FilterPanel
-        selectedFilterId={selectedFilterId}
-        setSelectedFilterId={setSelectedFilterId}
-        todoList={todoList}
-        searchText={searchText}
-        setSearchText={setSearchText}
-      />
+      <FilterPanel />
       <div className="main-content">
         <input
           type="text"
@@ -138,14 +80,7 @@ function App() {
           ref={taskInputRef}
         />
         <div>{todos}</div>
-        {isShowSideBar && (
-          <SideBar
-            key={selectedTodoItemId}
-            handleCloseSideBar={handleCloseSideBar}
-            todoItem={selectedTodoItem}
-            handleSaveTodoItem={handleSaveTodoItem}
-          />
-        )}
+        <SideBar key={selectedTodoItemId} />
       </div>
     </div>
   );

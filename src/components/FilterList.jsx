@@ -1,11 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
+import { FILTER_ITEMS } from "../contants";
+import { AppContext } from "../context/AppContext";
 
-const FilterList = ({
-  filterItems,
-  selectedFilterId,
-  todoList,
-  handleFilterItemClick,
-}) => {
+const FilterList = () => {
+  const { todoList, selectedFilterId, setSelectedFilterId } =
+    useContext(AppContext);
+
   const countTodoByFilterId = useMemo(() => {
     return todoList.reduce(
       (acc, todo) => {
@@ -25,9 +25,13 @@ const FilterList = ({
     );
   }, [todoList]);
 
+  const handleFilterItemClick = (filterItemId) => {
+    setSelectedFilterId(filterItemId);
+  };
+
   return (
     <div className="filter-container">
-      {filterItems.map((filterItem) => {
+      {FILTER_ITEMS.map((filterItem) => {
         return (
           <div
             key={filterItem.id}

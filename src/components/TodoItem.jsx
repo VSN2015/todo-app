@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const TodoItem = (props) => {
+  const { setSelectedTodoItemId, setIsShowSideBar, todoList, setTodoList } =
+    useContext(AppContext);
+
+  const handleTodoItemClick = (todoItemId) => {
+    setSelectedTodoItemId(todoItemId);
+    setIsShowSideBar(true);
+  };
+
+  const handleTodoItemCheckboxChange = (todoItemId) => {
+    const updatedTodoList = todoList.map((todo) => {
+      if (todo.id === todoItemId) {
+        return { ...todo, isDone: !todo.isDone };
+      }
+      return todo;
+    });
+    setTodoList(updatedTodoList);
+  };
+
   return (
-    <div
-      className="todo-item"
-      onClick={() => props.handleTodoItemClick(props.id)}
-    >
+    <div className="todo-item" onClick={() => handleTodoItemClick(props.id)}>
       <div style={{ display: "flex", gap: 4 }}>
         <input
           type="checkbox"
           checked={props.isDone}
           onClick={(e) => e.stopPropagation()}
-          onChange={() => props.handleTodoItemCheckboxChange(props.id)}
+          onChange={() => handleTodoItemCheckboxChange(props.id)}
         />
         <p style={{ textDecoration: props.isDone ? "line-through" : "none" }}>
           {props.name}

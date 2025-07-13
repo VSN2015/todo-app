@@ -1,39 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./FilterPanel.css";
+import FilterList from "./FilterList";
+import CategoryList from "./CategoryList";
+import { AppContext } from "../context/AppContext";
 
-const filterItems = [
-  {
-    id: "all",
-    name: "All",
-    iconPath: "./public/inbox.png",
-  },
-  {
-    id: "important",
-    name: "Important",
-    iconPath: "./public/flag.png",
-  },
-  {
-    id: "completed",
-    name: "Completed",
-    iconPath: "./public/check.png",
-  },
-  {
-    id: "deleted",
-    name: "Deleted",
-    iconPath: "./public/delete.png",
-  },
-];
-
-const FilterPanel = ({
-  selectedFilterId,
-  setSelectedFilterId,
-  todoList,
-  searchText,
-  setSearchText,
-}) => {
-  const handleFilterItemClick = (filterItemId) => {
-    setSelectedFilterId(filterItemId);
-  };
+const FilterPanel = () => {
+  const { searchText, setSearchText } = useContext(AppContext);
 
   return (
     <div className="filter-panel">
@@ -45,12 +17,8 @@ const FilterPanel = ({
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
       />
-      <FilterList
-        filterItems={filterItems}
-        selectedFilterId={selectedFilterId}
-        todoList={todoList}
-        handleFilterItemClick={handleFilterItemClick}
-      />
+      <FilterList />
+      <CategoryList />
     </div>
   );
 };

@@ -1,0 +1,21 @@
+.category-list {
+  margin-top: 20px;
+}
+
+.category-list-title {
+  margin-left: 5px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 5px;;
+  background-color: rgb(234, 255, 255);
+  border-radius: 5px;
+}
+
+.category-item.selected {
+  background-color: #0454fc;
+  color: white;
+}

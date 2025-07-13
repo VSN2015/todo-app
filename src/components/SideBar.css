@@ -26,10 +26,10 @@
   width: 100%;
 }
 
-.sidebar-content-input-checkbox {
+.sidebar-content-input-checkbox, .sidebar-content-input-selectbox {
   display: flex;
   flex-direction: column;
-  align-items:flex-start;
+  align-items: flex-start;
   
   /* justify-content: space-between; */
 }
