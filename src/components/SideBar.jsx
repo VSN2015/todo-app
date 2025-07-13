@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./SideBar.css";
 import { CATEGORY_ITEMS } from "../contants";
-import { AppContext } from "../context/AppContext";
+import { useAppContext } from "../hooks/UseAppContext";
 
 const SideBar = () => {
   const {
@@ -10,7 +10,7 @@ const SideBar = () => {
     todoList,
     setTodoList,
     selectedTodoItem,
-  } = useContext(AppContext);
+  } = useAppContext();
   const [newTodoItem, setNewTodoItem] = useState({ ...selectedTodoItem });
 
   const handleCloseSideBar = () => {
@@ -25,6 +25,7 @@ const SideBar = () => {
       return todo;
     });
     setTodoList(updatedTodoList);
+    setIsShowSideBar(false);
   };
 
   return (

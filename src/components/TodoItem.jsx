@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import React from "react";
+import { useAppContext } from "../hooks/UseAppContext";
 
 const TodoItem = (props) => {
   const { setSelectedTodoItemId, setIsShowSideBar, todoList, setTodoList } =
-    useContext(AppContext);
+    useAppContext();
 
   const handleTodoItemClick = (todoItemId) => {
     setSelectedTodoItemId(todoItemId);

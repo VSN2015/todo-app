@@ -21,21 +21,21 @@ export const FILTER_ITEMS = [
   {
     id: "all",
     name: "All",
-    iconPath: "./public/inbox.png",
+    iconPath: "/inbox.png",
   },
   {
     id: "important",
     name: "Important",
-    iconPath: "./public/flag.png",
+    iconPath: "/flag.png",
   },
   {
     id: "completed",
     name: "Completed",
-    iconPath: "./public/check.png",
+    iconPath: "/check.png",
   },
   {
     id: "deleted",
     name: "Deleted",
-    iconPath: "./public/delete.png",
+    iconPath: "/delete.png",
   },
 ]

@@ -1,10 +1,9 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import { FILTER_ITEMS } from "../contants";
-import { AppContext } from "../context/AppContext";
+import { useAppContext } from "../hooks/UseAppContext";
 
 const FilterList = () => {
-  const { todoList, selectedFilterId, setSelectedFilterId } =
-    useContext(AppContext);
+  const { todoList, selectedFilterId, setSelectedFilterId } = useAppContext();
 
   const countTodoByFilterId = useMemo(() => {
     return todoList.reduce(

@@ -1,9 +1,9 @@
-import { useContext, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import "./App.css";
 import TodoItem from "./components/TodoItem";
 import SideBar from "./components/SideBar";
 import FilterPanel from "./components/FilterPanel";
-import { AppContext } from "./context/AppContext";
+import { useAppContext } from "./hooks/UseAppContext";
 
 function App() {
   const taskInputRef = useRef();
@@ -14,7 +14,7 @@ function App() {
     searchText,
     todoList,
     setTodoList,
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {

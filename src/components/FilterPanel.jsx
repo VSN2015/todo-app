@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./FilterPanel.css";
 import FilterList from "./FilterList";
 import CategoryList from "./CategoryList";
-import { AppContext } from "../context/AppContext";
+import { useAppContext } from "../hooks/UseAppContext";
 
 const FilterPanel = () => {
-  const { searchText, setSearchText } = useContext(AppContext);
+  const { searchText, setSearchText } = useAppContext();
 
   return (
     <div className="filter-panel">
